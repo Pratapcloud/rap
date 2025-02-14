@@ -1,0 +1,9 @@
+@EndUserText.label: 'TRAVEL MANAGED SERVICE'
+define service ZUI_TRAVEL_MANAGED_SERVICE {
+
+
+
+
+  expose ZC_EO_TRAVEL1  as travel;
+  expose ZC_EO_BOOKING1 as booking;
+}

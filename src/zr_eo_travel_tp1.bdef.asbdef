@@ -1,0 +1,60 @@
+managed implementation in class zbp_r_eo_trave unique;
+strict ( 2 );
+
+define behavior for ZR_EO_TRAVEL_TP1 //alias <alias_name>
+persistent table /dmo/travel_m
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  field ( readonly ) TravelId;
+  association _BOOKING { create; }
+   mapping for /dmo/travel_m
+    {
+      TravelId      = travel_id;
+      AgencyId      = agency_id;
+      BeginDate     = begin_date;
+      BookingFee    = booking_fee;
+      CustomerId    = customer_id;
+      TotalPrice    = total_price;
+      CurrencyCode  = currency_code;
+      OverallStatus = overall_status;
+      EndDate       = end_date;
+      Description   = description;
+      CreatedBy     = created_by;
+      CreatedAt     = created_at;
+      LastChangedBy = last_changed_by;
+      LastChangedAt = last_changed_at;
+    }
+
+}
+
+define behavior for ZR_EO_BOOKING_TP1 //alias <alias_name>
+persistent table /dmo/booking_m
+lock dependent by _TRAVEL
+authorization dependent by _TRAVEL
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) TravelId, BookingId;
+  association _TRAVEL;
+
+  mapping for /dmo/booking_m
+    {
+      TravelId      = travel_id;
+      BookingId     = booking_id;
+      BookingDate   = booking_date;
+      CustomerId    = customer_id;
+      CarrierId     = carrier_id;
+      ConnectionId  = connection_id;
+      FlightDate    = flight_date;
+      FlightPrice   = flight_price;
+      CurrencyCode  = currency_code;
+      BookingStatus = booking_status;
+      LastChangedAt = last_changed_at;
+    }
+}
